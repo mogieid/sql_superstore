@@ -1,0 +1,41 @@
+---------- Superstore  Dataset analysis using SQL ---------------
+
+select * from orders
+select * from people
+select * from returns
+----------------------------------------------------
+select * from orders where YEAR([Ship_Date]) > '2015'
+
+--Count of and Group by returned
+select Returned, count(Order_ID) from returns group by Returned
+
+-- Count of orders group by Person
+select  b.Person ,count(a.Order_ID) CountOfOrders from orders a
+join people b on a.Region = b.Region
+group by b.Person
+
+--Total sales group by state
+select state , SUM(round(sales,0)) TotalSales from orders
+group by State
+order by 2 desc
+
+--Count of Customers en each region
+select  Region ,count( distinct Customer_ID) CountOfCustomers from orders 
+group by Region order by 2 desc
+
+--Count of orders according to ship mode
+select  Ship_Mode ,count( distinct Order_ID) CountOfOrders from orders 
+group by Ship_Mode order by 2 desc
+
+
+--Count of orders according to category
+select  Category ,count( distinct Order_ID) CountOfOrders from orders 
+group by Category order by 2 desc
+
+--Count of orders according to sub-category
+select  Sub_Category ,count( distinct Order_ID) CountOfOrders from orders 
+group by Sub_Category order by 2 desc
+
+--Count of orders between 11/2015 and 11/2014 in Californa state
+select  count( distinct Order_ID) CountOfOrders from orders 
+where Order_Date between '2014-11-01' and '2015-11-30' and state = 'California'
